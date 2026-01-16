@@ -34,7 +34,7 @@
   }
 
   .roulette-number {
-    @apply w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg cursor-pointer transition-all duration-150 hover:scale-110 active:scale-95;
+    @apply w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full font-bold text-xs sm:text-sm md:text-lg cursor-pointer transition-all duration-150 hover:scale-110 active:scale-95;
   }
 
   .number-red {

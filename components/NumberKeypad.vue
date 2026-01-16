@@ -1,9 +1,10 @@
 <template>
   <div class="card">
-    <h2 class="text-2xl font-bold mb-4 text-yellow-400">Nummer eingeben</h2>
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-yellow-400">Nummer eingeben</h2>
 
     <!-- European Roulette Layout -->
-    <div class="grid grid-cols-13 gap-1">
+    <div class="overflow-x-auto -mx-2 px-2 pb-2">
+      <div class="grid grid-cols-13 gap-0.5 sm:gap-1 min-w-min">
       <!-- Zero at top -->
       <button
         @click="selectNumber(0)"
@@ -31,41 +32,45 @@
           </button>
         </template>
       </template>
+      </div>
     </div>
 
     <!-- Quick Actions -->
-    <div class="mt-4 flex gap-2">
+    <div class="mt-4 flex flex-wrap sm:flex-nowrap gap-2">
       <button
         @click="selectRandomNumber"
-        class="btn-primary flex-1"
+        class="btn-primary flex-1 min-w-[100px] text-sm sm:text-base"
         title="Select a random roulette number (0-36)"
       >
-        🎲 Random
+        <span class="hidden sm:inline">🎲 Random</span>
+        <span class="sm:hidden">🎲</span>
       </button>
       <button
         @click="$emit('undo')"
-        class="btn-secondary flex-1"
+        class="btn-secondary flex-1 min-w-[100px] text-sm sm:text-base"
         :disabled="!canUndo"
       >
-        ↶ Rückgängig
+        <span class="hidden sm:inline">↶ Rückgängig</span>
+        <span class="sm:hidden">↶</span>
       </button>
       <button
         @click="$emit('reset')"
-        class="btn-danger flex-1"
+        class="btn-danger flex-1 min-w-[100px] text-sm sm:text-base"
       >
-        ⟲ Neu starten
+        <span class="hidden sm:inline">⟲ Neu starten</span>
+        <span class="sm:hidden">⟲</span>
       </button>
     </div>
 
     <!-- History Display -->
     <div v-if="history.length > 0" class="mt-4">
-      <h3 class="text-sm font-semibold text-gray-400 mb-2">Letzte 10 Zahlen:</h3>
-      <div class="flex gap-2 flex-wrap">
+      <h3 class="text-xs sm:text-sm font-semibold text-gray-400 mb-2">Letzte 10 Zahlen:</h3>
+      <div class="flex gap-1.5 sm:gap-2 flex-wrap">
         <span
           v-for="(num, idx) in recentHistory"
           :key="idx"
           :class="[
-            'w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold',
+            'w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0',
             getNumberColor(num) === 'red' ? 'bg-red-600' :
             getNumberColor(num) === 'green' ? 'bg-green-600' : 'bg-gray-900 border border-gray-600'
           ]"
