@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Casino-themed color palette */
+:root {
+  --casino-green: #0f5132;
+  --casino-gold: #ffc107;
+  --casino-red: #dc3545;
+  --casino-black: #0a0a0a;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-900 text-gray-100 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 font-bold py-2 px-4 rounded-lg shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-200 transform hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-700 text-gray-100 font-semibold py-2 px-4 rounded-lg hover:bg-gray-600 transition-all duration-200;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-gray-800 border border-gray-700 rounded-xl shadow-2xl p-6;
+  }
+
+  .roulette-number {
+    @apply w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg cursor-pointer transition-all duration-150 hover:scale-110 active:scale-95;
+  }
+
+  .number-red {
+    @apply bg-red-600 text-white hover:bg-red-700;
+  }
+
+  .number-black {
+    @apply bg-gray-900 text-white border-2 border-gray-600 hover:bg-gray-800;
+  }
+
+  .number-green {
+    @apply bg-green-600 text-white hover:bg-green-700;
+  }
+}
