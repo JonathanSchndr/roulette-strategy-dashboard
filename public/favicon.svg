@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#1a1a1a" stroke="#ffc107" stroke-width="2"/>
+
+  <!-- Roulette segments (simplified) -->
+  <!-- Red segments -->
+  <path d="M 50 50 L 50 5 A 45 45 0 0 1 81.82 18.18 Z" fill="#dc3545"/>
+  <path d="M 50 50 L 81.82 18.18 A 45 45 0 0 1 95 50 Z" fill="#1f1f1f"/>
+  <path d="M 50 50 L 95 50 A 45 45 0 0 1 81.82 81.82 Z" fill="#dc3545"/>
+  <path d="M 50 50 L 81.82 81.82 A 45 45 0 0 1 50 95 Z" fill="#1f1f1f"/>
+  <path d="M 50 50 L 50 95 A 45 45 0 0 1 18.18 81.82 Z" fill="#dc3545"/>
+  <path d="M 50 50 L 18.18 81.82 A 45 45 0 0 1 5 50 Z" fill="#1f1f1f"/>
+  <path d="M 50 50 L 5 50 A 45 45 0 0 1 18.18 18.18 Z" fill="#dc3545"/>
+  <path d="M 50 50 L 18.18 18.18 A 45 45 0 0 1 50 5 Z" fill="#1f1f1f"/>
+
+  <!-- Center circle (green zero) -->
+  <circle cx="50" cy="50" r="15" fill="#0f5132"/>
+
+  <!-- Zero number -->
+  <text x="50" y="57" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffc107" text-anchor="middle">0</text>
+
+  <!-- Inner ring -->
+  <circle cx="50" cy="50" r="12" fill="none" stroke="#ffc107" stroke-width="1"/>
+</svg>
