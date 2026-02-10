@@ -156,12 +156,20 @@ export function parseGenericCSV(csvContent: string): ParsedRouletteData {
  * Auto-detect format and parse
  */
 export function parseRouletteCSV(csvContent: string): ParsedRouletteData {
-  // Check if it's Spielbank format (contains N;Z;R pattern)
-  if (csvContent.includes('N;Z;R') || csvContent.includes('Spielbank')) {
+  // Check header line to determine format
+  const firstLine = csvContent.split('\n')[0].toLowerCase();
+
+  // If header contains 'number,timestamp' it's the generic format
+  if (firstLine.includes('number,') || firstLine.includes('number;')) {
+    return parseGenericCSV(csvContent);
+  }
+
+  // Check if it's Spielbank format (contains N;Z;R pattern in header)
+  if (csvContent.includes('N;Z;R')) {
     return parseSpielbank(csvContent);
   }
 
-  // Otherwise assume generic format
+  // Default to generic format
   return parseGenericCSV(csvContent);
 }
 

@@ -181,7 +181,21 @@ async function processFile(file: File) {
 
   try {
     const content = await file.text();
+
+    // Debug logging
+    console.log('=== CSV Import Debug ===');
+    console.log('File name:', file.name);
+    console.log('File size:', file.size, 'bytes');
+    console.log('First 200 chars:', content.substring(0, 200));
+    console.log('First line:', content.split('\n')[0]);
+
     const parsed = parseRouletteCSV(content);
+
+    console.log('Parsed entries:', parsed.entries.length);
+    console.log('Metadata:', parsed.metadata);
+    if (parsed.entries.length > 0) {
+      console.log('First entry:', parsed.entries[0]);
+    }
 
     if (parsed.entries.length === 0) {
       errorMessage.value = 'Keine gültigen Zahlen in der CSV-Datei gefunden';
@@ -190,6 +204,7 @@ async function processFile(file: File) {
 
     preview.value = parsed;
   } catch (error) {
+    console.error('CSV Parse Error:', error);
     errorMessage.value = `Fehler beim Parsen der CSV: ${error}`;
   }
 }
