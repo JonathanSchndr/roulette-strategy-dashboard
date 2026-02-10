@@ -428,19 +428,53 @@ export const useGameStore = defineStore('game', {
     },
 
     /**
-     * Export session as CSV string
+     * Export session as CSV string (generic format compatible with import)
      */
     exportSessionCSV(): string {
-      const headers = ['Spin', 'Number', 'Total Bet', 'Total Won', 'Net Result', 'Balance'];
+      const headers = ['number', 'timestamp', 'session', 'location', 'table', 'notes'];
+      const sessionId = this.sessionId.slice(0, 8);
+
       const rows = this.spinResults.map((result, index) => {
-        const totalBet = result.totalLost;
+        const timestamp = new Date(this.sessionStartTime.getTime() + index * 60000)
+          .toISOString()
+          .replace('T', ' ')
+          .substring(0, 19);
+
+        const notes = `Bet: €${result.totalLost.toFixed(2)} | Won: €${result.totalWon.toFixed(2)} | Net: €${result.netResult.toFixed(2)} | Balance: €${result.balance.toFixed(2)}`;
+
         return [
-          index + 1,
           result.number,
-          totalBet.toFixed(2),
-          result.totalWon.toFixed(2),
-          result.netResult.toFixed(2),
-          result.balance.toFixed(2)
+          timestamp,
+          `Session ${sessionId}`,
+          '', // location (empty, user can fill in)
+          '', // table (empty, user can fill in)
+          notes
+        ].join(',');
+      });
+
+      return [headers.join(','), ...rows].join('\n');
+    },
+
+    /**
+     * Export only numbers (simple permanenzen format)
+     */
+    exportPermanenzenCSV(): string {
+      const headers = ['number', 'timestamp', 'session', 'location', 'table', 'notes'];
+      const sessionId = this.sessionId.slice(0, 8);
+
+      const rows = this.history.map((number, index) => {
+        const timestamp = new Date(this.sessionStartTime.getTime() + index * 60000)
+          .toISOString()
+          .replace('T', ' ')
+          .substring(0, 19);
+
+        return [
+          number,
+          timestamp,
+          `Session ${sessionId}`,
+          '', // location (empty, user can fill in)
+          '', // table (empty, user can fill in)
+          '' // notes (empty)
         ].join(',');
       });
 
@@ -495,6 +529,20 @@ export const useGameStore = defineStore('game', {
           }
         });
       }
+    },
+
+    /**
+     * Import multiple spins from array (e.g., from CSV)
+     * Processes each spin in sequence, updating the game state
+     */
+    importSpins(numbers: RouletteNumber[], resetFirst: boolean = true) {
+      if (resetFirst) {
+        this.resetGame();
+      }
+
+      numbers.forEach(number => {
+        this.addSpin(number);
+      });
     }
   }
 });

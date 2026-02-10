@@ -86,9 +86,14 @@
           @update="handleSettingsUpdate"
         />
 
+        <ImportPanel
+          v-if="activeTab === 'import'"
+        />
+
         <ExportPanel
           v-if="activeTab === 'export'"
           :has-data="gameStore.history.length > 0"
+          :on-export-permanenzen-c-s-v="() => gameStore.exportPermanenzenCSV()"
           :on-export-c-s-v="() => gameStore.exportSessionCSV()"
           :on-export-j-s-o-n="() => gameStore.exportSessionJSON()"
         />
@@ -115,12 +120,13 @@ import { useGameStore } from '~/stores/game';
 const gameStore = useGameStore();
 
 // Active tab management
-const activeTab = ref<'heatmap' | 'worst-case' | 'settings' | 'export'>('heatmap');
+const activeTab = ref<'heatmap' | 'worst-case' | 'settings' | 'import' | 'export'>('heatmap');
 
 const tabs = [
   { id: 'heatmap' as const, label: '🔥 Heatmap' },
   { id: 'worst-case' as const, label: '⚠️ Worst-Case' },
   { id: 'settings' as const, label: '⚙️ Einstellungen' },
+  { id: 'import' as const, label: '📂 Import' },
   { id: 'export' as const, label: '📥 Export' }
 ];
 

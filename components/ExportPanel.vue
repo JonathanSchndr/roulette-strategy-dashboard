@@ -1,30 +1,55 @@
 <template>
   <div class="card">
-    <h2 class="text-2xl font-bold mb-4 text-yellow-400">📥 Daten exportieren</h2>
+    <h2 class="text-xl sm:text-2xl font-bold mb-4 text-yellow-400">📥 Daten exportieren</h2>
 
     <p class="text-sm text-gray-400 mb-4">
-      Exportiere deine Session-Daten für weitere Analysen.
+      Exportiere deine Session-Daten für weitere Analysen oder zum Re-Import.
     </p>
 
     <div class="space-y-3">
-      <!-- CSV Export -->
+      <!-- Permanenzen CSV Export (simple) -->
       <button
-        @click="exportCSV"
-        class="btn-primary w-full flex items-center justify-center gap-2"
+        @click="exportPermanenzenCSV"
+        class="btn-primary w-full text-sm sm:text-base"
         :disabled="!hasData"
       >
-        <span>📊</span>
-        <span>Als CSV exportieren</span>
+        <div class="flex items-center justify-center gap-2">
+          <span>📊</span>
+          <span>Permanenzen als CSV</span>
+        </div>
+        <div class="text-xs opacity-75 mt-1">
+          Nur Zahlen (re-importierbar)
+        </div>
+      </button>
+
+      <!-- Detailed CSV Export -->
+      <button
+        @click="exportCSV"
+        class="btn-secondary w-full text-sm sm:text-base"
+        :disabled="!hasData"
+      >
+        <div class="flex items-center justify-center gap-2">
+          <span>📈</span>
+          <span>Detaillierte CSV</span>
+        </div>
+        <div class="text-xs opacity-75 mt-1">
+          Mit Strategie-Details
+        </div>
       </button>
 
       <!-- JSON Export -->
       <button
         @click="exportJSON"
-        class="btn-secondary w-full flex items-center justify-center gap-2"
+        class="btn-secondary w-full text-sm sm:text-base"
         :disabled="!hasData"
       >
-        <span>📋</span>
-        <span>Als JSON exportieren</span>
+        <div class="flex items-center justify-center gap-2">
+          <span>📋</span>
+          <span>Als JSON exportieren</span>
+        </div>
+        <div class="text-xs opacity-75 mt-1">
+          Vollständige Session-Daten
+        </div>
       </button>
 
       <!-- Info -->
@@ -43,6 +68,7 @@
 interface Props {
   hasData: boolean;
   onExportCSV: () => string;
+  onExportPermanenzenCSV: () => string;
   onExportJSON: () => object;
 }
 
@@ -50,9 +76,15 @@ const props = defineProps<Props>();
 
 const exported = ref(false);
 
+function exportPermanenzenCSV() {
+  const csvData = props.onExportPermanenzenCSV();
+  downloadFile(csvData, 'roulette-permanenzen.csv', 'text/csv');
+  showExportedMessage();
+}
+
 function exportCSV() {
   const csvData = props.onExportCSV();
-  downloadFile(csvData, 'roulette-session.csv', 'text/csv');
+  downloadFile(csvData, 'roulette-session-detailed.csv', 'text/csv');
   showExportedMessage();
 }
 
